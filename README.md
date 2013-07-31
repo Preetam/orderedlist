@@ -2,6 +2,10 @@
 
 orderedlist is an ordered list (not obvious, I know) for Go.
 
+## API Documentation
+
+The GoDoc generated documentation is [here](http://godoc.org/github.com/PreetamJinka/orderedlist).
+
 ## License
 
 MIT.
