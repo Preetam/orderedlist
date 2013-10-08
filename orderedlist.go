@@ -37,8 +37,6 @@ func (l *OrderedList) Insert(c Comparable) {
 			return
 		}
 	}
-
-	fmt.Println(c, 0)
 }
 
 // Remove removes a key from the ordered list.
