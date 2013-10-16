@@ -62,6 +62,7 @@ func (l *OrderedList) firstGreaterThanOrEqual(c Comparable) *list.Element {
 	return elem
 }
 
+// GetRange returns a slice of Comparables in the range [start, end).
 func (l *OrderedList) GetRange(start Comparable, end Comparable) (keys []Comparable) {
 	keys = make([]Comparable, 0)
 	startElem := l.firstGreaterThanOrEqual(start)
