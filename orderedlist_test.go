@@ -7,7 +7,7 @@ import (
 
 type ComparableString string
 
-func (cs ComparableString) Compare(c Comparable) int {
+func (cs ComparableString) Compare(c interface{}) int {
 	if cs > c.(ComparableString) {
 		return 1
 	}
