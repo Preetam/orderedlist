@@ -7,7 +7,7 @@ import (
 )
 
 type Comparable interface {
-	Compare(c Comparable) int
+	Compare(c interface{}) int
 }
 
 // OrderedList is an ordered linked list.
