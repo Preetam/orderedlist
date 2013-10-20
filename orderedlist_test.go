@@ -46,3 +46,25 @@ func TestGetRange(t *testing.T) {
 		t.Errorf("Expected `[1 a aa]`, got `%v`", out)
 	}
 }
+
+func TestGetRangeIterator(t *testing.T) {
+	ol := New()
+
+	ol.Insert(ComparableString("c"))
+	ol.Insert(ComparableString("a"))
+	ol.Insert(ComparableString("b"))
+	ol.Insert(ComparableString("aa"))
+	ol.Insert(ComparableString("1"))
+	ol.Insert(ComparableString("\x05"))
+	ol.Remove(ComparableString("\x05"))
+
+	i := ol.GetRangeIterator(ComparableString("b"), ComparableString("\xff"))
+
+	if e := i.Next(); e.Value().Compare(ComparableString("c")) != 0 {
+		t.Errorf("Expected iterator value to be c, got %v", e.Value())
+	}
+
+	if e := i.Prev(); e != nil {
+		t.Errorf("Expected iterator to be nil, got non-nil with value %v", e.Value())
+	}
+}
