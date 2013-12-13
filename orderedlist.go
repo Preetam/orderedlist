@@ -143,9 +143,11 @@ func (l *OrderedList) GetRangeIterator(start, end Comparable) *RangeIterator {
 	}
 }
 
-// Print prints the values stored in the list.
-func (l *OrderedList) Print() {
+// String returns a string representation of the values stored in the list.
+func (l *OrderedList) String() string {
+	ret := "["
 	for e := l.linkedlist.Front(); e != nil; e = e.Next() {
-		fmt.Println(e.Value)
+		ret += fmt.Sprintf(" %v", e.Value)
 	}
+	return ret + " ]"
 }
