@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-type ComparableString string
-
 func CompareStrings(a, b interface{}) (result int) {
 	defer func() {
 		if r := recover(); r != nil {
