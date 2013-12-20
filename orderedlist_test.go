@@ -7,61 +7,74 @@ import (
 
 type ComparableString string
 
-func (cs ComparableString) Compare(c interface{}) int {
-	if cs > c.(ComparableString) {
-		return 1
+func CompareStrings(a, b interface{}) (result int) {
+	defer func() {
+		if r := recover(); r != nil {
+			result = 0
+		}
+	}()
+
+	aStr := a.(string)
+	bStr := b.(string)
+
+	if aStr > bStr {
+		result = 1
 	}
-	if cs < c.(ComparableString) {
+
+	if aStr < bStr {
 		return -1
 	}
-	return 0
+
+	return
 }
 
 func TestSetGet(t *testing.T) {
-	ol := New()
+	ol := New(CompareStrings)
 
-	ol.Insert(ComparableString("c"))
-	ol.Insert(ComparableString("a"))
-	ol.Insert(ComparableString("b"))
-	ol.Insert(ComparableString("aa"))
-	ol.Insert(ComparableString("1"))
-	ol.Insert(ComparableString("\x05"))
-	ol.Remove(ComparableString("\x05"))
-	if out := fmt.Sprint(ol.GetRange(ComparableString(""), ComparableString("\xff"))); out != "[1 a aa b c]" {
+	ol.Insert("c")
+	ol.Insert("a")
+	ol.Insert("b")
+	ol.Insert("aa")
+	ol.Insert("1")
+	ol.Insert("\x05")
+	ol.Remove("\x05")
+	if out := fmt.Sprint(ol.GetRange("", "\xff")); out != "[1 a aa b c]" {
 		t.Errorf("Expected `[1 a aa b c]`, got `%v`", out)
 	}
 }
 
 func TestGetRange(t *testing.T) {
-	ol := New()
+	ol := New(CompareStrings)
 
-	ol.Insert(ComparableString("c"))
-	ol.Insert(ComparableString("a"))
-	ol.Insert(ComparableString("b"))
-	ol.Insert(ComparableString("aa"))
-	ol.Insert(ComparableString("1"))
-	ol.Insert(ComparableString("\x05"))
-	ol.Remove(ComparableString("\x05"))
-	if out := fmt.Sprint(ol.GetRange(ComparableString("1"), ComparableString("b"))); out != "[1 a aa]" {
+	ol.Insert("c")
+	ol.Insert("a")
+	ol.Insert("b")
+	ol.Insert("aa")
+	ol.Insert("1")
+	ol.Insert("\x05")
+	ol.Remove("\x05")
+	if out := fmt.Sprint(ol.GetRange("1", "b")); out != "[1 a aa]" {
 		t.Errorf("Expected `[1 a aa]`, got `%v`", out)
 	}
 }
 
 func TestGetRangeIterator(t *testing.T) {
-	ol := New()
+	ol := New(CompareStrings)
 
-	ol.Insert(ComparableString("c"))
-	ol.Insert(ComparableString("a"))
-	ol.Insert(ComparableString("b"))
-	ol.Insert(ComparableString("aa"))
-	ol.Insert(ComparableString("1"))
-	ol.Insert(ComparableString("\x05"))
-	ol.Remove(ComparableString("\x05"))
+	ol.Insert("c")
+	ol.Insert("a")
+	ol.Insert("b")
+	ol.Insert("aa")
+	ol.Insert("1")
+	ol.Insert("\x05")
+	ol.Remove("\x05")
 
-	i := ol.GetRangeIterator(ComparableString("b"), ComparableString("\xff"))
+	i := ol.GetRangeIterator("b", "\xff")
 
-	if e := i.Next(); e.Value().Compare(ComparableString("c")) != 0 {
-		t.Errorf("Expected iterator value to be c, got %v", e.Value())
+	if e := i.Next(); e != nil {
+		if CompareStrings(e.Value(), "c") != 0 {
+			t.Errorf("Expected iterator value to be c, got %v", e.Value())
+		}
 	}
 
 	if e := i.Prev(); e != nil {
