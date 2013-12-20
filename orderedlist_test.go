@@ -76,9 +76,8 @@ func TestGetRangeIterator(t *testing.T) {
 			t.Errorf("Expected iterator value to be c, got %v", e.Value())
 		}
 	}
-	if i == nil {
-		t.Error(i)
-	} else if e := i.Prev(); e != nil {
+
+	if e := i.Prev(); e != nil {
 		t.Errorf("Expected iterator to be nil, got non-nil with value %v", e.Value())
 	}
 }
