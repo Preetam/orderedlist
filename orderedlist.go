@@ -61,7 +61,7 @@ func (r *RangeIterator) Prev() *RangeIterator {
 	return nil
 }
 
-// Value returns the comparable value at the current element.
+// Value returns the value at the current element.
 func (r *RangeIterator) Value() interface{} {
 	return r.e.Value
 }
@@ -114,7 +114,7 @@ func (l *OrderedList) firstGreaterThanOrEqual(c interface{}) *list.Element {
 	return elem
 }
 
-// GetRange returns a slice of Comparables in the range [start, end).
+// GetRange returns a slice of interface{} types in the range [start, end).
 func (l *OrderedList) GetRange(start interface{}, end interface{}) (keys []interface{}) {
 	keys = make([]interface{}, 0)
 	startElem := l.firstGreaterThanOrEqual(start)
