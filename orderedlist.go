@@ -116,7 +116,7 @@ func (l *OrderedList) firstGreaterThanOrEqual(c interface{}) *list.Element {
 
 // GetRange returns a slice of interface{} types in the range [start, end).
 func (l *OrderedList) GetRange(start interface{}, end interface{}) (keys []interface{}) {
-	keys = make([]interface{}, 0)
+	keys = make([]interface{}, 0, l.linkedlist.Len())
 	startElem := l.firstGreaterThanOrEqual(start)
 	for e := startElem; e != nil; e = e.Next() {
 		if l.compare(e.Value, end) < 0 {
